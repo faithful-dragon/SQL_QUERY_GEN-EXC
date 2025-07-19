@@ -1,0 +1,364 @@
+✅ Database connection successful!
+Starting....!
+/Users/freddy/Projects/GEN-AI-PROJECTS/SQL_QUERY_GEN&EXC/tools.py:72: LangChainDeprecationWarning: LangChain agents will continue to be supported, but it is recommended for new use cases to be built with LangGraph. LangGraph offers a more flexible and full-featured framework for building agents, including support for tool-calling, persistence of state, and human-in-the-loop workflows. For details, refer to the `LangGraph documentation <https://langchain-ai.github.io/langgraph/>`_ as well as guides for `Migrating from AgentExecutor <https://python.langchain.com/docs/how_to/migrate_agent/>`_ and LangGraph's `Pre-built ReAct agent <https://langchain-ai.github.io/langgraph/how-tos/create-react-agent/>`_.
+  agent = initialize_agent(
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `ConnectToDB` with `{}`
+
+
+✅ Database connection successful!response: 
+    connection_status: true
+    error_message: null
+
+> Finished chain.
+✅ Agent response: {'input': 'System: \n        You are an agent named DBConnector, and task is to check if connection to DB can be made or not.\n        Return a response using the following format strictly, avoid any other text:\n\n        response: \n            connection_status: true or false\n            error_message: if any\n        \nHuman: Connect to the database and check it is connected sussessfully or not, If there is any error, print that..!', 'output': 'response: \n    connection_status: true\n    error_message: null'}
+✅ Database connection successful!
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+bill, customer, owner, payment
+Invoking: `sql_db_schema` with `{'table_names': 'bill, customer, owner, payment'}`
+
+
+
+CREATE TABLE shop.bill (
+        id SERIAL NOT NULL, 
+        bill_no BIGINT NOT NULL, 
+        customer_id BIGINT NOT NULL, 
+        type shop.bill_type NOT NULL, 
+        metal shop.metal_type NOT NULL, 
+        metal_rate DOUBLE PRECISION NOT NULL, 
+        date DATE, 
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        CONSTRAINT bill_pkey PRIMARY KEY (id), 
+        CONSTRAINT fk_bill_customer FOREIGN KEY(customer_id) REFERENCES shop.customer (id)
+)
+
+
+CREATE TABLE shop.customer (
+        id SERIAL NOT NULL, 
+        owner_id BIGINT NOT NULL, 
+        shop_name VARCHAR(255), 
+        name VARCHAR(255) NOT NULL, 
+        reg_id VARCHAR(12) NOT NULL, 
+        gst_in VARCHAR(15) DEFAULT NULL::character varying, 
+        reg_date DATE, 
+        phone_no VARCHAR(10), 
+        is_active shop.is_active NOT NULL, 
+        address VARCHAR(255), 
+        remarks TEXT, 
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        CONSTRAINT customer_pkey PRIMARY KEY (id), 
+        CONSTRAINT fk_owner_id FOREIGN KEY(owner_id) REFERENCES shop.owner (id), 
+        CONSTRAINT unique_name_ph_no_oid UNIQUE (shop_name, name, phone_no, owner_id), 
+        CONSTRAINT unique_reg_id UNIQUE (reg_id)
+)
+
+
+CREATE TABLE shop.owner (
+        id SERIAL NOT NULL, 
+        shop_name VARCHAR(255) NOT NULL, 
+        owner_name VARCHAR(255) NOT NULL, 
+        reg_id VARCHAR(10) NOT NULL, 
+        gst_in VARCHAR(15) DEFAULT NULL::character varying, 
+        phone_no VARCHAR(10) NOT NULL, 
+        is_active shop.is_active NOT NULL, 
+        reg_date DATE NOT NULL, 
+        address VARCHAR(255), 
+        key VARCHAR(255) NOT NULL, 
+        remarks TEXT, 
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        dreg_date DATE, 
+        balance INTEGER DEFAULT 0, 
+        CONSTRAINT owner_pkey PRIMARY KEY (id), 
+        CONSTRAINT owner_reg_id UNIQUE (reg_id), 
+        CONSTRAINT unique_name_ph_no UNIQUE (shop_name, owner_name, phone_no)
+)
+
+
+CREATE TABLE shop.payment (
+        id SERIAL NOT NULL, 
+        bill_id BIGINT, 
+        customer_id BIGINT, 
+        factor shop.entry_factor NOT NULL, 
+        "new" DOUBLE PRECISION DEFAULT 0.0, 
+        prev DOUBLE PRECISION DEFAULT 0.0, 
+        total DOUBLE PRECISION DEFAULT 0.0, 
+        paid DOUBLE PRECISION DEFAULT 0.0, 
+        rem DOUBLE PRECISION DEFAULT 0.0, 
+        type shop.payment_type NOT NULL, 
+        date DATE NOT NULL, 
+        remarks TEXT, 
+        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+        CONSTRAINT payment_pkey PRIMARY KEY (id), 
+        CONSTRAINT fk_payment_bill FOREIGN KEY(bill_id) REFERENCES shop.bill (id), 
+        CONSTRAINT fk_payment_customer_id FOREIGN KEY(customer_id) REFERENCES shop.customer (id)
+)```json
+{
+    "response": {
+        "stat": "Pass",
+        "tables": [
+            {
+                "schema_name": "shop",
+                "name": "bill",
+                "column_names": [
+                    "id",
+                    "bill_no",
+                    "customer_id",
+                    "type",
+                    "metal",
+                    "metal_rate",
+                    "date",
+                    "created_at",
+                    "updated_at"
+                ],
+                "datatypes": {
+                    "id": "SERIAL",
+                    "bill_no": "BIGINT",
+                    "customer_id": "BIGINT",
+                    "type": "shop.bill_type",
+                    "metal": "shop.metal_type",
+                    "metal_rate": "DOUBLE PRECISION",
+                    "date": "DATE",
+                    "created_at": "TIMESTAMP WITHOUT TIME ZONE",
+                    "updated_at": "TIMESTAMP WITHOUT TIME ZONE"
+                },
+                "primary_key": ["id"],
+                "foreign_keys": [
+                    "fk_bill_customer FOREIGN KEY(customer_id) REFERENCES shop.customer(id)"
+                ],
+                "sequences": [],
+                "constraints": ["bill_pkey PRIMARY KEY (id)"]
+            },
+            {
+                "schema_name": "shop",
+                "name": "customer",
+                "column_names": [
+                    "id",
+                    "owner_id",
+                    "shop_name",
+                    "name",
+                    "reg_id",
+                    "gst_in",
+                    "reg_date",
+                    "phone_no",
+                    "is_active",
+                    "address",
+                    "remarks",
+                    "created_at",
+                    "updated_at"
+                ],
+                "datatypes": {
+                    "id": "SERIAL",
+                    "owner_id": "BIGINT",
+                    "shop_name": "VARCHAR(255)",
+                    "name": "VARCHAR(255)",
+                    "reg_id": "VARCHAR(12)",
+                    "gst_in": "VARCHAR(15)",
+                    "reg_date": "DATE",
+                    "phone_no": "VARCHAR(10)",
+                    "is_active": "shop.is_active",
+                    "address": "VARCHAR(255)",
+                    "remarks": "TEXT",
+                    "created_at": "TIMESTAMP WITHOUT TIME ZONE",
+                    "updated_at": "TIMESTAMP WITHOUT TIME ZONE"
+                },
+                "primary_key": ["id"],
+                "foreign_keys": [
+                    "fk_owner_id FOREIGN KEY(owner_id) REFERENCES shop.owner(id)"
+                ],
+                "sequences": [],
+                "constraints": [
+                    "customer_pkey PRIMARY KEY (id)",
+                    "unique_name_ph_no_oid UNIQUE (shop_name, name, phone_no, owner_id)",
+                    "unique_reg_id UNIQUE (reg_id)"
+                ]
+            },
+            {
+                "schema_name": "shop",
+                "name": "owner",
+                "column_names": [
+                    "id",
+                    "shop_name",
+                    "owner_name",
+                    "reg_id",
+                    "gst_in",
+                    "phone_no",
+                    "is_active",
+                    "reg_date",
+                    "address",
+                    "key",
+                    "remarks",
+                    "created_at",
+                    "updated_at",
+                    "dreg_date",
+                    "balance"
+                ],
+                "datatypes": {
+                    "id": "SERIAL",
+                    "shop_name": "VARCHAR(255)",
+                    "owner_name": "VARCHAR(255)",
+                    "reg_id": "VARCHAR(10)",
+                    "gst_in": "VARCHAR(15)",
+                    "phone_no": "VARCHAR(10)",
+                    "is_active": "shop.is_active",
+                    "reg_date": "DATE",
+                    "address": "VARCHAR(255)",
+                    "key": "VARCHAR(255)",
+                    "remarks": "TEXT",
+                    "created_at": "TIMESTAMP WITHOUT TIME ZONE",
+                    "updated_at": "TIMESTAMP WITHOUT TIME ZONE",
+                    "dreg_date": "DATE",
+                    "balance": "INTEGER"
+                },
+                "primary_key": ["id"],
+                "foreign_keys": [],
+                "sequences": [],
+                "constraints": [
+                    "owner_pkey PRIMARY KEY (id)",
+                    "owner_reg_id UNIQUE (reg_id)",
+                    "unique_name_ph_no UNIQUE (shop_name, owner_name, phone_no)"
+                ]
+            },
+            {
+                "schema_name": "shop",
+                "name": "payment",
+                "column_names": [
+                    "id",
+                    "bill_id",
+                    "customer_id",
+                    "factor",
+                    "new",
+                    "prev",
+                    "total",
+                    "paid",
+                    "rem",
+                    "type",
+                    "date",
+                    "remarks",
+                    "created_at",
+                    "updated_at"
+                ],
+                "datatypes": {
+                    "id": "SERIAL",
+                    "bill_id": "BIGINT",
+                    "customer_id": "BIGINT",
+                    "factor": "shop.entry_factor",
+                    "new": "DOUBLE PRECISION",
+                    "prev": "DOUBLE PRECISION",
+                    "total": "DOUBLE PRECISION",
+                    "paid": "DOUBLE PRECISION",
+                    "rem": "DOUBLE PRECISION",
+                    "type": "shop.payment_type",
+                    "date": "DATE",
+                    "remarks": "TEXT",
+                    "created_at": "TIMESTAMP WITHOUT TIME ZONE",
+                    "updated_at": "TIMESTAMP WITHOUT TIME ZONE"
+                },
+                "primary_key": ["id"],
+                "foreign_keys": [
+                    "fk_payment_bill FOREIGN KEY(bill_id) REFERENCES shop.bill(id)",
+                    "fk_payment_customer_id FOREIGN KEY(customer_id) REFERENCES shop.customer(id)"
+                ],
+                "sequences": [],
+                "constraints": ["payment_pkey PRIMARY KEY (id)"]
+            }
+        ]
+    }
+}
+```
+
+> Finished chain.
+✅ Schema summary saved..!
+[0 to exit], Enter your question: create enum user with values [Dev, Owner, Admin], and add two columns in each table    columns are [created_by shop.user and updated_by shop.user]
+
+
+> Entering new AgentExecutor chain...
+User Question:
+create enum user with values [Dev, Owner, Admin], and add two columns in each table [created_by shop.user and updated_by shop.user]
+
+SQL Query:
+```sql
+CREATE TYPE shop.user AS ENUM ('Dev', 'Owner', 'Admin');
+
+ALTER TABLE shop.bill ADD COLUMN created_by shop.user;
+ALTER TABLE shop.bill ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.customer ADD COLUMN created_by shop.user;
+ALTER TABLE shop.customer ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.owner ADD COLUMN created_by shop.user;
+ALTER TABLE shop.owner ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.payment ADD COLUMN created_by shop.user;
+ALTER TABLE shop.payment ADD COLUMN updated_by shop.user;
+```
+
+Expected Changes in DB Summary:
+- An enum type `shop.user` will be created with values 'Dev', 'Owner', and 'Admin'.
+- Two new columns, `created_by` and `updated_by`, will be added to each of the four tables (`bill`, `customer`, `owner`, and `payment`). Each of these new columns will be of type `shop.user`.
+
+> Finished chain.
+✅ User Query Response:
+ User Question:
+create enum user with values [Dev, Owner, Admin], and add two columns in each table [created_by shop.user and updated_by shop.user]
+
+SQL Query:
+```sql
+CREATE TYPE shop.user AS ENUM ('Dev', 'Owner', 'Admin');
+
+ALTER TABLE shop.bill ADD COLUMN created_by shop.user;
+ALTER TABLE shop.bill ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.customer ADD COLUMN created_by shop.user;
+ALTER TABLE shop.customer ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.owner ADD COLUMN created_by shop.user;
+ALTER TABLE shop.owner ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.payment ADD COLUMN created_by shop.user;
+ALTER TABLE shop.payment ADD COLUMN updated_by shop.user;
+```
+
+Expected Changes in DB Summary:
+- An enum type `shop.user` will be created with values 'Dev', 'Owner', and 'Admin'.
+- Two new columns, `created_by` and `updated_by`, will be added to each of the four tables (`bill`, `customer`, `owner`, and `payment`). Each of these new columns will be of type `shop.user`.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `ExecuteSQL` with `{'query': "CREATE TYPE shop.user AS ENUM ('Dev', 'Owner', 'Admin');\n\nALTER TABLE shop.bill ADD COLUMN created_by shop.user;\nALTER TABLE shop.bill ADD COLUMN updated_by shop.user;\n\nALTER TABLE shop.customer ADD COLUMN created_by shop.user;\nALTER TABLE shop.customer ADD COLUMN updated_by shop.user;\n\nALTER TABLE shop.owner ADD COLUMN created_by shop.user;\nALTER TABLE shop.owner ADD COLUMN updated_by shop.user;\n\nALTER TABLE shop.payment ADD COLUMN created_by shop.user;\nALTER TABLE shop.payment ADD COLUMN updated_by shop.user;"}`
+
+
+Query:  CREATE TYPE shop.user AS ENUM ('Dev', 'Owner', 'Admin');
+
+ALTER TABLE shop.bill ADD COLUMN created_by shop.user;
+ALTER TABLE shop.bill ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.customer ADD COLUMN created_by shop.user;
+ALTER TABLE shop.customer ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.owner ADD COLUMN created_by shop.user;
+ALTER TABLE shop.owner ADD COLUMN updated_by shop.user;
+
+ALTER TABLE shop.payment ADD COLUMN created_by shop.user;
+ALTER TABLE shop.payment ADD COLUMN updated_by shop.user;
+✅ Query executed. Rows affected: -1✅ Table created successfully. An enum type `shop.user` was created with values 'Dev', 'Owner', and 'Admin'. Two new columns, `created_by` and `updated_by`, have been added to each of the four tables (`bill`, `customer`, `owner`, and `payment`).
+
+> Finished chain.
+✅ Execute Response:
+ ✅ Table created successfully. An enum type `shop.user` was created with values 'Dev', 'Owner', and 'Admin'. Two new columns, `created_by` and `updated_by`, have been added to each of the four tables (`bill`, `customer`, `owner`, and `payment`).
+[0 to exit], Enter your question: 0
+Goodbye!
