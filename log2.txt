@@ -1,0 +1,1001 @@
+            {
+                "schema_name": "library",
+                "name": "loans",
+                "column_names": [
+                    "loan_id",
+                    "book_id",
+                    "member_id",
+                    "issue_date",
+                    "return_date",
+                    "returned"
+                ],
+                "datatypes": {
+                    "loan_id": "SERIAL",
+                    "book_id": "INTEGER",
+                    "member_id": "INTEGER",
+                    "issue_date": "DATE",
+                    "return_date": "DATE",
+                    "returned": "BOOLEAN"
+                },
+                "primary_key": [
+                    "loan_id"
+                ],
+                "foreign_keys": [
+                    "loans_book_id_fkey FOREIGN KEY(book_id) REFERENCES library.books (book_id) ON DELETE CASCADE",
+                    "loans_member_id_fkey FOREIGN KEY(member_id) REFERENCES library.members (member_id) ON DELETE CASCADE"
+                ],
+                "sequences": [],
+                "constraints": [
+                    "loans_pkey PRIMARY KEY (loan_id)"
+                ]
+            },
+            {
+                "schema_name": "library",
+                "name": "members",
+                "column_names": [
+                    "member_id",
+                    "name",
+                    "email",
+                    "phone",
+                    "membership_date"
+                ],
+                "datatypes": {
+                    "member_id": "SERIAL",
+                    "name": "VARCHAR(100)",
+                    "email": "VARCHAR(100)",
+                    "phone": "VARCHAR(20)",
+                    "membership_date": "DATE"
+                },
+                "primary_key": [
+                    "member_id"
+                ],
+                "foreign_keys": [],
+                "sequences": [],
+                "constraints": [
+                    "members_pkey PRIMARY KEY (member_id)",
+                    "members_email_key UNIQUE (email)"
+                ]
+            }
+        ]
+    }
+}
+```
+
+> Finished chain.
+✅ DB schema refreshed successfully.✅ Table created successfully. A new table named `Reviews` has been created in the `library` schema, with columns for review ID, member ID, book ID, rating, review text, and review date, enforcing all specified constraints and relationships.
+
+> Finished chain.
+✅ Execute Response:
+ ✅ Table created successfully. A new table named `Reviews` has been created in the `library` schema, with columns for review ID, member ID, book ID, rating, review text, and review date, enforcing all specified constraints and relationships.
+[0 to exit], Enter your question: Generate a PostgreSQL CREATE TYPE statement to define an ENUM named review_status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+books, librarians, loans, membersUser Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named review_status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+1. A new ENUM type called `review_status` will be created with the specified values.
+2. The `reviews` table will be modified to include a new column named `status`, which will default to `pending` for new records.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named review_status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+1. A new ENUM type called `review_status` will be created with the specified values.
+2. The `reviews` table will be modified to include a new column named `status`, which will default to `pending` for new records.
+Execute Query ? (y/n): n
+
+
+> Entering new AgentExecutor chain...
+User Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named review_status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- A new ENUM type `review_status` will be created with values 'pending', 'approved', and 'rejected'. The existing `Reviews` table will be modified to include a new column named `status`, which will default to 'pending' for new records added to the table.
+
+> Finished chain.
+✅ Updated User Query Response:  User Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named review_status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- A new ENUM type `review_status` will be created with values 'pending', 'approved', and 'rejected'. The existing `Reviews` table will be modified to include a new column named `status`, which will default to 'pending' for new records added to the table.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `ExecuteSQL` with `{'query': "CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');"}`
+
+
+Query:  CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+🔴 Error executing query: (psycopg2.errors.DuplicateObject) type "review_status" already exists
+
+[SQL: CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');]
+(Background on this error at: https://sqlalche.me/e/20/f405)🔴 Error: type "review_status" already exists.
+
+> Finished chain.
+✅ Execute Response:
+ 🔴 Error: type "review_status" already exists.
+[0 to exit], Enter your question: Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+books, librarians, loans, membersUser Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.Reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- This query will create a new ENUM type named `review_status` with specified values and then modify the Reviews table by adding a new column called `status`, which will default to `pending` for all new records added to the table.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type review_status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE library.Reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- This query will create a new ENUM type named `review_status` with specified values and then modify the Reviews table by adding a new column called `status`, which will default to `pending` for all new records added to the table.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `ExecuteSQL` with `{'query': "CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');"}`
+
+
+Query:  CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');
+🔴 Error executing query: (psycopg2.errors.DuplicateObject) type "review_status" already exists
+
+[SQL: CREATE TYPE review_status AS ENUM ('pending', 'approved', 'rejected');]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Invoking: `ExecuteSQL` with `{'query': "ALTER TABLE library.Reviews\nADD COLUMN status review_status DEFAULT 'pending';"}`
+
+
+Query:  ALTER TABLE library.Reviews
+ADD COLUMN status review_status DEFAULT 'pending';
+✅ Query executed. Rows affected: -1I attempted to execute the `CREATE TYPE` statement to define an ENUM named `review_status`. However, it produced an error because the type `review_status` already exists in the database.
+
+Then, I executed the `ALTER TABLE` statement to add a new column called `status` of type `review_status` with a default value of `pending` to the `Reviews` table. This change was successful.
+
+In summary:
+- The ENUM type `review_status` was not created since it already exists.
+- The `status` column was successfully added to the `library.Reviews` table, but there is no change in existing data as affected rows cannot be determined.
+
+🔹 **Schema Changes**: 
+- A new column `status` of type `review_status` with a default value of `pending` was added to the `library.Reviews` table.
+
+> Finished chain.
+✅ Execute Response:
+ I attempted to execute the `CREATE TYPE` statement to define an ENUM named `review_status`. However, it produced an error because the type `review_status` already exists in the database.
+
+Then, I executed the `ALTER TABLE` statement to add a new column called `status` of type `review_status` with a default value of `pending` to the `Reviews` table. This change was successful.
+
+In summary:
+- The ENUM type `review_status` was not created since it already exists.
+- The `status` column was successfully added to the `library.Reviews` table, but there is no change in existing data as affected rows cannot be determined.
+
+🔹 **Schema Changes**: 
+- A new column `status` of type `review_status` with a default value of `pending` was added to the `library.Reviews` table.
+[0 to exit], Enter your question: Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type status with a default value of `pending`.
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+books, librarians, loans, membersUser Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE reviews
+ADD COLUMN status status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- A new ENUM type named 'status' will be created with values 'pending', 'approved', and 'rejected'. The 'reviews' table will be modified to include a new column named 'status', which will default to 'pending' for newly inserted records.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+Generate a PostgreSQL CREATE TYPE statement to define an ENUM named status with values `pending`, `approved`, and `rejected`. Then, modify the existing Reviews table to add a column named status of type status with a default value of `pending`.
+
+SQL Query:
+```sql
+CREATE TYPE status AS ENUM ('pending', 'approved', 'rejected');
+
+ALTER TABLE reviews
+ADD COLUMN status status DEFAULT 'pending';
+```
+
+Expected Changes in DB Summary:
+-- A new ENUM type named 'status' will be created with values 'pending', 'approved', and 'rejected'. The 'reviews' table will be modified to include a new column named 'status', which will default to 'pending' for newly inserted records.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `ExecuteSQL` with `{'query': "CREATE TYPE status AS ENUM ('pending', 'approved', 'rejected');"}`
+
+
+Query:  CREATE TYPE status AS ENUM ('pending', 'approved', 'rejected');
+✅ Query executed. Rows affected: -1
+Invoking: `RefreshSchema` with `{}`
+
+
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+books, librarians, loans, members
+Invoking: `sql_db_schema` with `{'table_names': 'books,librarians,loans,members'}`
+
+
+
+CREATE TABLE library.books (
+        book_id SERIAL NOT NULL, 
+        title VARCHAR(255) NOT NULL, 
+        author VARCHAR(100) NOT NULL, 
+        genre VARCHAR(50), 
+        isbn VARCHAR(20) NOT NULL, 
+        copies_available INTEGER DEFAULT 1, 
+        CONSTRAINT books_pkey PRIMARY KEY (book_id), 
+        CONSTRAINT books_isbn_key UNIQUE (isbn), 
+        CONSTRAINT books_copies_available_check CHECK (copies_available >= 0)
+)
+
+
+CREATE TABLE library.librarians (
+        librarian_id SERIAL NOT NULL, 
+        name VARCHAR(100) NOT NULL, 
+        email VARCHAR(100) NOT NULL, 
+        phone VARCHAR(20), 
+        CONSTRAINT librarians_pkey PRIMARY KEY (librarian_id), 
+        CONSTRAINT librarians_email_key UNIQUE (email)
+)
+
+
+CREATE TABLE library.loans (
+        loan_id SERIAL NOT NULL, 
+        book_id INTEGER NOT NULL, 
+        member_id INTEGER NOT NULL, 
+        issue_date DATE NOT NULL, 
+        return_date DATE, 
+        returned BOOLEAN DEFAULT false, 
+        CONSTRAINT loans_pkey PRIMARY KEY (loan_id), 
+        CONSTRAINT loans_book_id_fkey FOREIGN KEY(book_id) REFERENCES library.books (book_id) ON DELETE CASCADE, 
+        CONSTRAINT loans_member_id_fkey FOREIGN KEY(member_id) REFERENCES library.members (member_id) ON DELETE CASCADE
+)
+
+
+CREATE TABLE library.members (
+        member_id SERIAL NOT NULL, 
+        name VARCHAR(100) NOT NULL, 
+        email VARCHAR(100) NOT NULL, 
+        phone VARCHAR(20), 
+        membership_date DATE NOT NULL, 
+        CONSTRAINT members_pkey PRIMARY KEY (member_id), 
+        CONSTRAINT members_email_key UNIQUE (email)
+)Here is a full JSON summary of the database schema:
+
+```json
+{
+    "response": {
+        "stat": "Pass",
+        "tables": [
+            {
+                "schema_name": "library",
+                "name": "books",
+                "column_names": [
+                    "book_id",
+                    "title",
+                    "author",
+                    "genre",
+                    "isbn",
+                    "copies_available"
+                ],
+                "datatypes": {
+                    "book_id": "SERIAL",
+                    "title": "VARCHAR(255)",
+                    "author": "VARCHAR(100)",
+                    "genre": "VARCHAR(50)",
+                    "isbn": "VARCHAR(20)",
+                    "copies_available": "INTEGER"
+                },
+                "primary_key": [
+                    "book_id"
+                ],
+                "foreign_keys": [],
+                "sequences": [],
+                "constraints": [
+                    "books_pkey PRIMARY KEY (book_id)",
+                    "books_isbn_key UNIQUE (isbn)",
+                    "books_copies_available_check CHECK (copies_available >= 0)"
+                ]
+            },
+            {
+                "schema_name": "library",
+                "name": "librarians",
+                "column_names": [
+                    "librarian_id",
+                    "name",
+                    "email",
+                    "phone"
+                ],
+                "datatypes": {
+                    "librarian_id": "SERIAL",
+                    "name": "VARCHAR(100)",
+                    "email": "VARCHAR(100)",
+                    "phone": "VARCHAR(20)"
+                },
+                "primary_key": [
+                    "librarian_id"
+                ],
+                "foreign_keys": [],
+                "sequences": [],
+                "constraints": [
+                    "librarians_pkey PRIMARY KEY (librarian_id)",
+                    "librarians_email_key UNIQUE (email)"
+                ]
+            },
+            {
+                "schema_name": "library",
+                "name": "loans",
+                "column_names": [
+                    "loan_id",
+                    "book_id",
+                    "member_id",
+                    "issue_date",
+                    "return_date",
+                    "returned"
+                ],
+                "datatypes": {
+                    "loan_id": "SERIAL",
+                    "book_id": "INTEGER",
+                    "member_id": "INTEGER",
+                    "issue_date": "DATE",
+                    "return_date": "DATE",
+                    "returned": "BOOLEAN"
+                },
+                "primary_key": [
+                    "loan_id"
+                ],
+                "foreign_keys": [
+                    "loans_book_id_fkey FOREIGN KEY(book_id) REFERENCES library.books (book_id) ON DELETE CASCADE",
+                    "loans_member_id_fkey FOREIGN KEY(member_id) REFERENCES library.members (member_id) ON DELETE CASCADE"
+                ],
+                "sequences": [],
+                "constraints": [
+                    "loans_pkey PRIMARY KEY (loan_id)"
+                ]
+            },
+            {
+                "schema_name": "library",
+                "name": "members",
+                "column_names": [
+                    "member_id",
+                    "name",
+                    "email",
+                    "phone",
+                    "membership_date"
+                ],
+                "datatypes": {
+                    "member_id": "SERIAL",
+                    "name": "VARCHAR(100)",
+                    "email": "VARCHAR(100)",
+                    "phone": "VARCHAR(20)",
+                    "membership_date": "DATE"
+                },
+                "primary_key": [
+                    "member_id"
+                ],
+                "foreign_keys": [],
+                "sequences": [],
+                "constraints": [
+                    "members_pkey PRIMARY KEY (member_id)",
+                    "members_email_key UNIQUE (email)"
+                ]
+            }
+        ]
+    }
+}
+```
+
+> Finished chain.
+✅ DB schema refreshed successfully.I have executed the first part of your SQL query, which creates an ENUM type named `status` with the specified values. Now, I will execute the second part, which modifies the existing `reviews` table to add a new column named `status` of type `status` with a default value of `pending`. 
+
+Let's proceed with that.
+
+> Finished chain.
+✅ Execute Response:
+ I have executed the first part of your SQL query, which creates an ENUM type named `status` with the specified values. Now, I will execute the second part, which modifies the existing `reviews` table to add a new column named `status` of type `status` with a default value of `pending`. 
+
+Let's proceed with that.
+[0 to exit], Enter your question: give me name of members who have taken book named 'The Hobbit' as loan, also tell me their phone no and email if available
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_query_checker` with `{'query': "SELECT m.name, m.phone, m.email \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE b.title = 'The Hobbit';"}`
+
+
+```sql
+SELECT m.name, m.phone, m.email 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE b.title = 'The Hobbit';
+```User Question:
+give me name of members who have taken book named 'The Hobbit' as loan, also tell me their phone no and email if available
+
+SQL Query:
+```sql
+SELECT m.name, m.phone, m.email 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE b.title = 'The Hobbit';
+```
+
+Expected Changes in DB Summary:
+-- This query will fetch the names, phone numbers, and email addresses of members who have borrowed the book titled 'The Hobbit'.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+give me name of members who have taken book named 'The Hobbit' as loan, also tell me their phone no and email if available
+
+SQL Query:
+```sql
+SELECT m.name, m.phone, m.email 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE b.title = 'The Hobbit';
+```
+
+Expected Changes in DB Summary:
+-- This query will fetch the names, phone numbers, and email addresses of members who have borrowed the book titled 'The Hobbit'.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_query_checker` with `{'query': "SELECT m.name, m.phone, m.email \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE b.title = 'The Hobbit';"}`
+
+
+```sql
+SELECT m.name, m.phone, m.email 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE b.title = 'The Hobbit';
+```
+Invoking: `sql_db_query` with `{'query': "SELECT m.name, m.phone, m.email \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE b.title = 'The Hobbit';"}`
+
+
+[('Alice Johnson', '1234567890', 'alice@example.com'), ('Bob Smith', '9876543210', 'bob@example.com')]I executed a SELECT query to fetch the names, phone numbers, and email addresses of members who have borrowed the book titled 'The Hobbit'. 
+
+Here are the results:
+
+```json
+[
+    {
+        "name": "Alice Johnson",
+        "phone": "1234567890",
+        "email": "alice@example.com"
+    },
+    {
+        "name": "Bob Smith",
+        "phone": "9876543210",
+        "email": "bob@example.com"
+    }
+]
+```
+
+> Finished chain.
+✅ Execute Response:
+ I executed a SELECT query to fetch the names, phone numbers, and email addresses of members who have borrowed the book titled 'The Hobbit'. 
+
+Here are the results:
+
+```json
+[
+    {
+        "name": "Alice Johnson",
+        "phone": "1234567890",
+        "email": "alice@example.com"
+    },
+    {
+        "name": "Bob Smith",
+        "phone": "9876543210",
+        "email": "bob@example.com"
+    }
+]
+```
+[0 to exit], Enter your question: Is there any member having membership after 2023-05-25, and taken any book for loan, if present tell me their details and the book they taken
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_query_checker` with `{'query': "SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE m.membership_date > '2023-05-25';"}`
+
+
+```sql
+SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-25';
+```User Question:
+Is there any member having membership after 2023-05-25, and taken any book for loan, if present tell me their details and the book they taken.
+
+SQL Query:
+```sql
+SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-25';
+```
+
+Expected Changes in DB Summary:
+-- This query will fetch details of members who have a membership date after May 25, 2023, along with the titles of any books they have loaned. The result will include the member's ID, name, email, phone number, membership date, and the book title.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+Is there any member having membership after 2023-05-25, and taken any book for loan, if present tell me their details and the book they taken.
+
+SQL Query:
+```sql
+SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-25';
+```
+
+Expected Changes in DB Summary:
+-- This query will fetch details of members who have a membership date after May 25, 2023, along with the titles of any books they have loaned. The result will include the member's ID, name, email, phone number, membership date, and the book title.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_query_checker` with `{'query': "SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE m.membership_date > '2023-05-25';"}`
+
+
+```sql
+SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-25';
+```
+Invoking: `sql_db_query` with `{'query': "SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title \nFROM library.members m \nJOIN library.loans l ON m.member_id = l.member_id \nJOIN library.books b ON l.book_id = b.book_id \nWHERE m.membership_date > '2023-05-25';"}`
+
+
+[(6, 'Fiona Brown', 'fiona@example.com', '1122334455', datetime.date(2023, 6, 1), 'Clean Code'), (7, 'George White', 'george@example.com', '2233445566', datetime.date(2023, 6, 15), "Harry Potter and the Sorcerer's Stone"), (8, 'Helen Black', 'helen@example.com', '3344556677', datetime.date(2023, 6, 30), 'A Brief History of Time'), (9, 'Ian Gray', 'ian@example.com', '4455667788', datetime.date(2023, 7, 1), 'The Catcher in the Rye'), (10, 'Jane Blue', 'jane@example.com', '5566778899', datetime.date(2023, 7, 5), 'Thinking, Fast and Slow'), (6, 'Fiona Brown', 'fiona@example.com', '1122334455', datetime.date(2023, 6, 1), 'Sapiens'), (7, 'George White', 'george@example.com', '2233445566', datetime.date(2023, 6, 15), 'Clean Code'), (8, 'Helen Black', 'helen@example.com', '3344556677', datetime.date(2023, 6, 30), "Harry Potter and the Sorcerer's Stone"), (9, 'Ian Gray', 'ian@example.com', '4455667788', datetime.date(2023, 7, 1), 'A Brief History of Time'), (10, 'Jane Blue', 'jane@example.com', '5566778899', datetime.date(2023, 7, 5), 'The Catcher in the Rye')]Here are the details of members who have a membership date after May 25, 2023, along with the books they have taken for loan:
+
+```json
+[
+    {
+        "member_id": 6,
+        "name": "Fiona Brown",
+        "email": "fiona@example.com",
+        "phone": "1122334455",
+        "membership_date": "2023-06-01",
+        "title": "Clean Code"
+    },
+    {
+        "member_id": 7,
+        "name": "George White",
+        "email": "george@example.com",
+        "phone": "2233445566",
+        "membership_date": "2023-06-15",
+        "title": "Harry Potter and the Sorcerer's Stone"
+    },
+    {
+        "member_id": 8,
+        "name": "Helen Black",
+        "email": "helen@example.com",
+        "phone": "3344556677",
+        "membership_date": "2023-06-30",
+        "title": "A Brief History of Time"
+    },
+    {
+        "member_id": 9,
+        "name": "Ian Gray",
+        "email": "ian@example.com",
+        "phone": "4455667788",
+        "membership_date": "2023-07-01",
+        "title": "The Catcher in the Rye"
+    },
+    {
+        "member_id": 10,
+        "name": "Jane Blue",
+        "email": "jane@example.com",
+        "phone": "5566778899",
+        "membership_date": "2023-07-05",
+        "title": "Thinking, Fast and Slow"
+    },
+    {
+        "member_id": 6,
+        "name": "Fiona Brown",
+        "email": "fiona@example.com",
+        "phone": "1122334455",
+        "membership_date": "2023-06-01",
+        "title": "Sapiens"
+    },
+    {
+        "member_id": 7,
+        "name": "George White",
+        "email": "george@example.com",
+        "phone": "2233445566",
+        "membership_date": "2023-06-15",
+        "title": "Clean Code"
+    },
+    {
+        "member_id": 8,
+        "name": "Helen Black",
+        "email": "helen@example.com",
+        "phone": "3344556677",
+        "membership_date": "2023-06-30",
+        "title": "Harry Potter and the Sorcerer's Stone"
+    },
+    {
+        "member_id": 9,
+        "name": "Ian Gray",
+        "email": "ian@example.com",
+        "phone": "4455667788",
+        "membership_date": "2023-07-01",
+        "title": "A Brief History of Time"
+    },
+    {
+        "member_id": 10,
+        "name": "Jane Blue",
+        "email": "jane@example.com",
+        "phone": "5566778899",
+        "membership_date": "2023-07-05",
+        "title": "The Catcher in the Rye"
+    }
+]
+```
+
+Please note that some members may appear more than once due to multiple loans.
+
+> Finished chain.
+✅ Execute Response:
+ Here are the details of members who have a membership date after May 25, 2023, along with the books they have taken for loan:
+
+```json
+[
+    {
+        "member_id": 6,
+        "name": "Fiona Brown",
+        "email": "fiona@example.com",
+        "phone": "1122334455",
+        "membership_date": "2023-06-01",
+        "title": "Clean Code"
+    },
+    {
+        "member_id": 7,
+        "name": "George White",
+        "email": "george@example.com",
+        "phone": "2233445566",
+        "membership_date": "2023-06-15",
+        "title": "Harry Potter and the Sorcerer's Stone"
+    },
+    {
+        "member_id": 8,
+        "name": "Helen Black",
+        "email": "helen@example.com",
+        "phone": "3344556677",
+        "membership_date": "2023-06-30",
+        "title": "A Brief History of Time"
+    },
+    {
+        "member_id": 9,
+        "name": "Ian Gray",
+        "email": "ian@example.com",
+        "phone": "4455667788",
+        "membership_date": "2023-07-01",
+        "title": "The Catcher in the Rye"
+    },
+    {
+        "member_id": 10,
+        "name": "Jane Blue",
+        "email": "jane@example.com",
+        "phone": "5566778899",
+        "membership_date": "2023-07-05",
+        "title": "Thinking, Fast and Slow"
+    },
+    {
+        "member_id": 6,
+        "name": "Fiona Brown",
+        "email": "fiona@example.com",
+        "phone": "1122334455",
+        "membership_date": "2023-06-01",
+        "title": "Sapiens"
+    },
+    {
+        "member_id": 7,
+        "name": "George White",
+        "email": "george@example.com",
+        "phone": "2233445566",
+        "membership_date": "2023-06-15",
+        "title": "Clean Code"
+    },
+    {
+        "member_id": 8,
+        "name": "Helen Black",
+        "email": "helen@example.com",
+        "phone": "3344556677",
+        "membership_date": "2023-06-30",
+        "title": "Harry Potter and the Sorcerer's Stone"
+    },
+    {
+        "member_id": 9,
+        "name": "Ian Gray",
+        "email": "ian@example.com",
+        "phone": "4455667788",
+        "membership_date": "2023-07-01",
+        "title": "A Brief History of Time"
+    },
+    {
+        "member_id": 10,
+        "name": "Jane Blue",
+        "email": "jane@example.com",
+        "phone": "5566778899",
+        "membership_date": "2023-07-05",
+        "title": "The Catcher in the Rye"
+    }
+]
+```
+
+Please note that some members may appear more than once due to multiple loans.
+[0 to exit], Enter your question: delete column SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title 
+FROM library.members m 
+JOIN library.loans l ON m.member_id = l.member_id 
+J
+
+> Entering new AgentExecutor chain...
+OIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-25';User Question:
+delete column SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title  
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+delete column SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title  
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+Execute Query ? (y/n): 
+
+> Entering new AgentExecutor chain...
+^R
+JOIN library.loans l ON m.member_id = l.member_id 
+JOIN library.books b ON l.book_id = b.book_id 
+WHERE m.membership_date > '2023-05-2User Question:
+Delete column SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+
+> Finished chain.
+✅ Updated User Query Response:  User Question:
+Delete column SELECT m.member_id, m.name, m.email, m.phone, m.membership_date, b.title
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+Execute Query ? (y/n): Enter updated query: 
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_query_checker` with `{'query': 'JOIN library.books b ON l.book_id = b.book_id'}`
+
+
+```sql
+JOIN library.books b ON l.book_id = b.book_id
+```🔴 Error: The SQL query is incorrect as it is missing a SELECT statement and a FROM clause. Please provide a complete SQL query.
+
+> Finished chain.
+✅ Execute Response:
+ 🔴 Error: The SQL query is incorrect as it is missing a SELECT statement and a FROM clause. Please provide a complete SQL query.
+[0 to exit], Enter your question: delete column review from table reviews
+
+
+> Entering new AgentExecutor chain...
+User Question:
+Give me a SQL query for below user question: WHERE m.membership_date > '2023-05-2
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+
+> Finished chain.
+✅ User Query Response:  User Question:
+Give me a SQL query for below user question: WHERE m.membership_date > '2023-05-2
+
+SQL Query:
+No SQL query generated. Type Y to print schema summary.
+Execute Query ? (y/n): y
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `sql_db_list_tables` with `{}`
+
+
+books, librarians, loans, members
+Invoking: `sql_db_schema` with `{'table_names': 'members'}`
+
+
+
+CREATE TABLE library.members (
+        member_id SERIAL NOT NULL, 
+        name VARCHAR(100) NOT NULL, 
+        email VARCHAR(100) NOT NULL, 
+        phone VARCHAR(20), 
+        membership_date DATE NOT NULL, 
+        CONSTRAINT members_pkey PRIMARY KEY (member_id), 
+        CONSTRAINT members_email_key UNIQUE (email)
+)^CTraceback (most recent call last):
+  File "/Users/freddy/Projects/GEN-AI-PROJECTS/SQL_QUERY_GEN&EXC/main.py", line 140, in <module>
+    main()
+  File "/Users/freddy/Projects/GEN-AI-PROJECTS/SQL_QUERY_GEN&EXC/main.py", line 136, in main
+    StartProject()
+  File "/Users/freddy/Projects/GEN-AI-PROJECTS/SQL_QUERY_GEN&EXC/main.py", line 101, in StartProject
+    execute_response = ExecuteAgent.invoke(messages)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain/chains/base.py", line 167, in invoke
+    raise e
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain/chains/base.py", line 157, in invoke
+    self._call(inputs, run_manager=run_manager)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain/agents/agent.py", line 1643, in _call
+    output = self._action_agent.return_stopped_response(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain/agents/openai_functions_agent/base.py", line 196, in return_stopped_response
+    agent_decision = self.plan(
+                     ^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain/agents/openai_functions_agent/base.py", line 130, in plan
+    predicted_message = self.llm.predict_messages(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/_api/deprecation.py", line 189, in warning_emitting_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 1283, in predict_messages
+    return self(messages, stop=_stop, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/_api/deprecation.py", line 189, in warning_emitting_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 1207, in __call__
+    generation = self.generate(
+                 ^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 782, in generate
+    self._generate_with_cache(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 1028, in _generate_with_cache
+    result = self._generate(
+             ^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/langchain_openai/chat_models/base.py", line 1130, in _generate
+    response = self.client.create(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 1087, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_base_client.py", line 1249, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_base_client.py", line 972, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/ssl.py", line 1263, in recv
+    return self.read(buflen)
+           ^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/ssl.py", line 1136, in read
+    return self._sslobj.read(len)
+           ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+freddy@Pawans-MacBook-Pro ~/P/G/SQL_QUERY_GEN&EXC (main) [SIGINT]> 

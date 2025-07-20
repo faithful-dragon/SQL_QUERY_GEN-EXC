@@ -11,13 +11,12 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
+SCHEMA_NAME = "library"
+SchemaAgent = None
 DB_SCHEMA = ''
 
 OPENAI_MODEL = "gpt-4o-mini"
 MODEL_PROVIDER = "openai"
-
-# OPENAI_MODEL = "gemini-2.0-flash"
-# MODEL_PROVIDER = "google_vertexai"
 
 SYSTEM_MESSAGE = H.SystemMessage()
 HUMAN_MESSAGE = H.HumanMesssage()

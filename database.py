@@ -23,7 +23,7 @@ def GetDBConnection():
         # ✅ Test DB connection with SELECT 1
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
-            print("✅ Database connection successful!")
+            print("✅ Database connection successful!\n")
 
     except SQLAlchemyError as e:
         print("❌ Database connection failed:", e)
@@ -34,6 +34,6 @@ def GetDBConnection():
         engine=engine,
         include_tables=None,                   # Include all tables
         sample_rows_in_table_info=0,           # Disable sampling
-        schema="shop"
+        schema=C.SCHEMA_NAME
     )
     return db

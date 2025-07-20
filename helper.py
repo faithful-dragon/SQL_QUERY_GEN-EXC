@@ -2,31 +2,11 @@ import json
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
 
-# class TableInfo(BaseModel):
-#     name: str = Field(description="The name of the table")
-#     column_names: List[str] = Field(description="List of column names")
-#     datatypes: Dict[str, str] = Field(description="Mapping of column name to data type")
-#     primary_key: List[str] = Field(description="List of primary key columns")
-#     foreign_keys: Optional[List[str]] = Field(default=[], description="List of foreign key definitions")
-#     sequences: Optional[List[str]] = Field(default=[], description="List of sequences if any")
-#     constraints: Optional[List[str]] = Field(default=[], description="List of constraints on table")
-
-# class ResponseFormatter(BaseModel):
-#     # schema_name: str = Field(description="The name of the schema")
-#     # enum_names: Optional[List[str]] = Field(description="List of all enum names")
-#     # table_names: Optional[List[str]] = Field(description="List of all table names")
-#     # tables_info: Optional [Dict[str, TableInfo]] = Field(description="A mapping from table name to its metadata")
-#     answer: str = Field(description="The answer to the user's question")
-#     followup_question: str = Field(description="A followup question the user could ask")
-
-# class DBConnectionResponse(BaseModel):
-#     connection_status: bool = Field(..., description="True if DB connection is successful, otherwise false")
-#     error_message: str = Field(..., description="Error message if any")
-
 def SystemMessage():
     system_message = [
         """
         You are an agent named DBConnector, and task is to check if connection to DB can be made or not.
+        ## Important: Always/must tell which tool you are going to invoke and why you are going to invoke it.
         Return a response using the following format strictly, avoid any other text:
 
         response: 
@@ -75,13 +55,21 @@ def SystemMessage():
                 stat: Pass
                 details: "Error message"
 
+        ## Important: Always/must tell which tool you are going to invoke and why you are going to invoke it.
+
         """,
         """
             Your name is SchemaGPT, a virtual assistant skilled in database-related tasks.
+            Note: After executing any schema-changing query, refresh the schema using the `RefreshSchema` tool.
             You are responsible for generating accurate SQL queries based on user input using the provided database schema.
 
             --Important
              - You have to print only SQL Script based on user input only.
+             - properly write table names and column names.
+             - follow the format of table name and column name already given in schema.
+             - use proper syntax for all SQL queries.
+             - [Note]: If there is no SQL query to be generated, print "No SQL query generated. Type Y to print schema summary."
+             ## Important: Always/must tell which tool you are going to invoke and why you are going to invoke it.
 
             Output Format:
 
@@ -89,7 +77,7 @@ def SystemMessage():
             <<User's natural language question>>
 
             SQL Query:
-            -- SQL query goes here
+            -- SQL query goes here f generated.
 
             Expected Changes in DB Summary:
             -- If the query is read-only, describe what data will be fetched.
@@ -113,6 +101,7 @@ def SystemMessage():
 
             Be honest, do not fabricate any data. Only return what the database actually outputs.
             Make sure to update constant DB_SCHEMA, whenever schema is chaneged.
+            ## Important: Always/must tell which tool you are going to invoke and why you are going to invoke it.
         """
     ]
     return system_message

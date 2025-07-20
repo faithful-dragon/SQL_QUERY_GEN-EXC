@@ -1,5 +1,4 @@
 import constant as C
-import database as DB
 from sqlalchemy import text
 from typing import Optional
 from langchain_core.tools import tool
@@ -11,9 +10,9 @@ def ConnectToDB(dummy_input: Optional[str] = None) -> str:
     """Use this tool if connection to the database is needed"""
     db = C.DB
     if db:
-        return "✅ Database connection successful!"
+        return "✅ Database connection successful!\n"
     else:
-        return "❌ Database connection failed!"
+        return "❌ Database connection failed!\n"
 
 
 
@@ -36,6 +35,13 @@ def ExecuteSQL(query: str) -> str:
             else:
                 return f"✅ Query executed. Rows affected: {result.rowcount}"
 
+
+        # Commit changes if applicable
+        if query.strip().lower().startswith(("insert", "update", "delete", "drop", "create")):
+            conn.commit()
+        
+        conn.close()
+
     except Exception as e:
         return f"🔴 Error executing query: {str(e)}"
 
@@ -51,8 +57,6 @@ def RefreshSchema() -> str:
     Refreshes the global DB_Schema by invoking the schema summary agent again.
     This should be called after any query that changes the schema (ALTER, CREATE, DROP).
     """
-    from main import schemaAgent  # or pass schemaAgent into context
-    import main
 
     try:
         messages = prompt.format(
@@ -60,8 +64,8 @@ def RefreshSchema() -> str:
             human_message=C.HUMAN_MESSAGE[1]
         )
 
-        response = main.schemaAgent.invoke(messages)
-        main.DB_Schema = response['output']
+        response = C.SchemaAgent.invoke(messages)
+        C.DB_Schema = response['output']
 
         return "✅ DB schema refreshed successfully."
     except Exception as e:
